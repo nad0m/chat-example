@@ -11,7 +11,16 @@ io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
+
+  socket.on('disconnect', function(){
+    io.emit('user connected', "Number of users connected: " + socket.client.conn.server.clientsCount);
+  });
 });
+
+io.on('connect', function(socket){
+  io.emit('user connected', "Number of users connected: " + socket.client.conn.server.clientsCount);
+});
+
 
 http.listen(port, function(){
   console.log('listening on *:' + port);
